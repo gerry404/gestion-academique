@@ -1,0 +1,3 @@
+# Module: Statistiques generales
+# Controllers a creer:
+#  - StatsController (taux de reussite, effectifs par filiere, moyennes, etc.)

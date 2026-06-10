@@ -1,0 +1,9 @@
+# Services de generation PDF
+# Classes a creer pour generer:
+#  - Carte etudiant
+#  - Certificat de scolarite
+#  - Releve de notes
+#  - PV de session
+#
+# Librairie suggeree: barryvdh/laravel-dompdf
+# Installation: composer require barryvdh/laravel-dompdf

@@ -1,0 +1,6 @@
+# Module: Gestion des effets academiques
+# Controllers a creer:
+#  - BoursierController (liste des boursiers par filiere)
+#  - CarteEtudiantController (generation PDF carte etudiant)
+#  - CertificatController (generation PDF certificat)
+#  - ReleveNoteController (generation PDF releve de notes)

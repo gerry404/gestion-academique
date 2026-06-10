@@ -1,0 +1,10 @@
+# Module: Gestion de l'etablissement
+# Controllers a creer:
+#  - AnneeAcademiqueController
+#  - PersonnelController
+#  - DepartementController
+#  - SpecialiteController
+#  - NiveauController
+#  - UEController
+#  - MatiereController
+#  - DiplomeController

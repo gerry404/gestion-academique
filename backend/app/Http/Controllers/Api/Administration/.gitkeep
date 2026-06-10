@@ -1,0 +1,4 @@
+# Module: Administration
+# Controllers a creer:
+#  - UserController (CRUD utilisateurs)
+#  - RoleController (gestion roles et permissions)
