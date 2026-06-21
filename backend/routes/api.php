@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // --- Modules metier (a implementer par l'equipe) ---
     // Route::apiResource('annees-academiques', AnneeAcademiqueController::class);
     // Route::apiResource('departements', DepartementController::class);
-    // Route::apiResource('specialites', SpecialiteController::class);
+    // Route ::apiResource('specialites', SpecialiteController::class);
     // Route::apiResource('niveaux', NiveauController::class);
     // Route::apiResource('ue', UEController::class);
     // Route::apiResource('matieres', MatiereController::class);

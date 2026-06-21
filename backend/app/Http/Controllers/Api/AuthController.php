@@ -26,11 +26,14 @@ class AuthController extends Controller
             ]);
         }
 
+        // MODIFICATION : On inclut les rôles Spatie dans l'objet User pour Flutter
+        $user->load('roles'); 
+
         $token = $user->createToken('flutter')->plainTextToken;
 
         return response()->json([
             'message' => 'Connexion reussie.',
-            'user' => $user,
+            'user' => $user, // Contient maintenant un tableau "roles"
             'token' => $token,
         ]);
     }
@@ -41,8 +44,13 @@ class AuthController extends Controller
      */
     public function me(Request $request): JsonResponse
     {
+        $user = $request->user();
+        
+        // MODIFICATION : On charge aussi les rôles ici pour rafraîchir l'application
+        $user->load('roles'); 
+
         return response()->json([
-            'user' => $request->user(),
+            'user' => $user,
         ]);
     }
 
