@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/auth_provider.dart';
@@ -11,16 +12,19 @@ class DashboardPage extends StatelessWidget {
       titre: "Gestion de l'etablissement",
       desc: 'Annees, departements, specialites, niveaux, UE, matieres',
       couleur: Color(0xFF3B82F6),
+      route: '/etablissement',
     ),
     _Module(
       titre: 'Gestion des etudiants',
       desc: 'Liste, inscription, infos etudiants',
       couleur: Color(0xFF10B981),
+      route: '/etudiants',
     ),
     _Module(
       titre: 'Gestion des notes',
       desc: 'Attribution des notes CC et SN par matiere',
       couleur: Color(0xFFF59E0B),
+      route: '/notes',
     ),
     _Module(
       titre: 'Effets academiques',
@@ -36,6 +40,7 @@ class DashboardPage extends StatelessWidget {
       titre: 'Administration',
       desc: 'Utilisateurs, roles et permissions',
       couleur: Color(0xFF334155),
+      route: '/administration',
     ),
   ];
 
@@ -95,11 +100,13 @@ class _Module {
     required this.titre,
     required this.desc,
     required this.couleur,
+    this.route,
   });
 
   final String titre;
   final String desc;
   final Color couleur;
+  final String? route;
 }
 
 class _ModuleCard extends StatelessWidget {
@@ -109,55 +116,67 @@ class _ModuleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
+    final enabled = module.route != null;
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 4,
-            offset: Offset(0, 1),
+        onTap: enabled ? () => context.go(module.route!) : null,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: const Color(0xFFE2E8F0)),
+            boxShadow: const [
+              BoxShadow(
+                color: Color(0x0F000000),
+                blurRadius: 4,
+                offset: Offset(0, 1),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 48,
-            height: 8,
-            decoration: BoxDecoration(
-              color: module.couleur,
-              borderRadius: BorderRadius.circular(999),
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 48,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: module.couleur,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                module.titre,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF1E293B),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                module.desc,
+                style: const TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+              ),
+              const Spacer(),
+              Text(
+                enabled ? 'Ouvrir' : 'A implementer',
+                style: TextStyle(
+                  fontSize: 12,
+                  fontStyle: enabled ? FontStyle.normal : FontStyle.italic,
+                  fontWeight: enabled ? FontWeight.w600 : FontWeight.normal,
+                  color: enabled
+                      ? const Color(0xFF1D4ED8)
+                      : const Color(0xFF94A3B8),
+                ),
+              ),
+            ],
           ),
-          const SizedBox(height: 12),
-          Text(
-            module.titre,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1E293B),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            module.desc,
-            style: const TextStyle(fontSize: 14, color: Color(0xFF64748B)),
-          ),
-          const Spacer(),
-          const Text(
-            'A implementer',
-            style: TextStyle(
-              fontSize: 12,
-              fontStyle: FontStyle.italic,
-              color: Color(0xFF94A3B8),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

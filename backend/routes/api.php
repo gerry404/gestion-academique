@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EtudiantController;
+use App\Http\Controllers\Api\MatiereController;
+use App\Http\Controllers\Api\NoteController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::apiResource('matieres', MatiereController::class);
     // Route::apiResource('diplomes', DiplomeController::class);
     // Route::apiResource('personnels', PersonnelController::class);
-    // Route::apiResource('etudiants', EtudiantController::class);
+    Route::apiResource('matieres', MatiereController::class);
+    Route::apiResource('etudiants', EtudiantController::class);
     // Route::apiResource('inscriptions', InscriptionController::class);
-    // Route::apiResource('notes', NoteController::class);
+    Route::apiResource('notes', NoteController::class);
+    Route::apiResource('utilisateurs', UserController::class);
 });

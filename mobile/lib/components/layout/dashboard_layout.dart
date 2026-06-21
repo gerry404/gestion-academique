@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/auth_provider.dart';
+
+class _NavEntry {
+  const _NavEntry(this.label, this.route);
+
+  final String label;
+  final String? route;
+}
 
 class DashboardLayout extends StatelessWidget {
   const DashboardLayout({super.key, required this.child});
 
   final Widget child;
 
-  static const _navItems = <String>[
-    'Accueil',
-    'Etablissement',
-    'Etudiants',
-    'Notes',
-    'Effets academiques',
-    'Statistiques',
-    'Administration',
+  static const _navItems = <_NavEntry>[
+    _NavEntry('Accueil', '/'),
+    _NavEntry('Etablissement', '/etablissement'),
+    _NavEntry('Etudiants', '/etudiants'),
+    _NavEntry('Notes', '/notes'),
+    _NavEntry('Effets academiques', null),
+    _NavEntry('Statistiques', null),
+    _NavEntry('Administration', '/administration'),
   ];
 
   @override
@@ -114,10 +122,13 @@ class _Sidebar extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            for (var i = 0; i < DashboardLayout._navItems.length; i++)
+            for (final item in DashboardLayout._navItems)
               _NavItem(
-                label: DashboardLayout._navItems[i],
-                active: i == 0,
+                label: item.label,
+                active: _isActive(context, item.route),
+                onTap: item.route == null
+                    ? null
+                    : () => context.go(item.route!),
               ),
           ],
         ),
@@ -126,11 +137,19 @@ class _Sidebar extends StatelessWidget {
   }
 }
 
+bool _isActive(BuildContext context, String? route) {
+  if (route == null) return false;
+  final location = GoRouterState.of(context).matchedLocation;
+  if (route == '/') return location == '/';
+  return location == route || location.startsWith('$route/');
+}
+
 class _NavItem extends StatelessWidget {
-  const _NavItem({required this.label, this.active = false});
+  const _NavItem({required this.label, this.active = false, this.onTap});
 
   final String label;
   final bool active;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +160,7 @@ class _NavItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: () {},
+          onTap: onTap,
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 10),

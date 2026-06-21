@@ -45,9 +45,25 @@ class AuthService {
 
   static String messageFromError(Object error) {
     if (error is DioException) {
-      final data = error.response?.data;
-      if (data is Map && data['message'] is String) {
-        return data['message'] as String;
+      final response = error.response;
+      if (response == null) {
+        return 'Impossible de joindre le serveur. Verifiez que le backend tourne et que l\'URL de l\'API est correcte.';
+      }
+      if (response.statusCode == 401) {
+        return 'Identifiants incorrects.';
+      }
+      final data = response.data;
+      if (data is Map) {
+        if (data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          final first = errors.values.first;
+          if (first is List && first.isNotEmpty) {
+            return first.first.toString();
+          }
+        }
+        if (data['message'] is String) {
+          return data['message'] as String;
+        }
       }
     }
     return 'Identifiants incorrects.';
