@@ -29,9 +29,7 @@ class _NoteFormPageState extends State<NoteFormPage> {
   @override
   void initState() {
     super.initState();
-    _valeur = TextEditingController(
-      text: widget.note?.valeur.toString() ?? '',
-    );
+    _valeur = TextEditingController(text: widget.note?.valeur.toString() ?? '');
     _etudiantId = widget.note?.etudiantId;
     _matiereId = widget.note?.matiereId;
     _type = widget.note?.type ?? 'CC';
@@ -51,7 +49,9 @@ class _NoteFormPageState extends State<NoteFormPage> {
     if (!_formKey.currentState!.validate()) return;
     if (_etudiantId == null || _matiereId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Selectionnez un etudiant et une matiere.')),
+        const SnackBar(
+          content: Text('Selectionnez un etudiant et une matiere.'),
+        ),
       );
       return;
     }
@@ -156,8 +156,14 @@ class _NoteFormPageState extends State<NoteFormPage> {
                       initialValue: _type,
                       decoration: _decoration(),
                       items: const [
-                        DropdownMenuItem(value: 'CC', child: Text('CC (controle continu)')),
-                        DropdownMenuItem(value: 'SN', child: Text('SN (session normale)')),
+                        DropdownMenuItem(
+                          value: 'CC',
+                          child: Text('CC (controle continu)'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'SN',
+                          child: Text('SN (session normale)'),
+                        ),
                       ],
                       onChanged: (v) => setState(() => _type = v ?? 'CC'),
                     ),
@@ -170,8 +176,9 @@ class _NoteFormPageState extends State<NoteFormPage> {
                       ),
                       decoration: _decoration(),
                       validator: (v) {
-                        final n =
-                            double.tryParse((v ?? '').trim().replaceAll(',', '.'));
+                        final n = double.tryParse(
+                          (v ?? '').trim().replaceAll(',', '.'),
+                        );
                         if (n == null) return 'Note invalide.';
                         if (n < 0 || n > 20) return 'Entre 0 et 20.';
                         return null;
@@ -215,9 +222,7 @@ class _NoteFormPageState extends State<NoteFormPage> {
     return InputDecoration(
       filled: true,
       fillColor: const Color(0xFFF8FAFC),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
     );
   }
 }
