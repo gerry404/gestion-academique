@@ -1,9 +1,148 @@
+/* resources/css/app.css */
 @import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* ========== COULEURS ========== */
+    --color-brand-50: #eff6ff;
+    --color-brand-100: #dbeafe;
+    --color-brand-200: #bfdbfe;
+    --color-brand-300: #93c5fd;
+    --color-brand-400: #60a5fa;
+    --color-brand-500: #3b82f6;
+    --color-brand-600: #2563eb;
+    --color-brand-700: #1d4ed8;
+    --color-brand-800: #1e40af;
+    --color-brand-900: #1e3a8a;
+    --color-brand-950: #172554;
+
+    /* ========== POLICES ========== */
+    --font-family-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* ========== ANIMATIONS ========== */
+    --animate-fade-in: fadeIn 0.3s ease-out;
+    --animate-slide-up: slideUp 0.35s ease-out;
+    --animate-slide-down: slideDown 0.3s ease-out;
+    --animate-pop: pop 0.25s ease-out;
+    --animate-spin-slow: spin 3s linear infinite;
+
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+        0% { opacity: 0; transform: translateY(15px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+        0% { opacity: 0; transform: translateY(-10px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+        0% { opacity: 0; transform: scale(0.92); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* ========== OMBRES ========== */
+    --shadow-card: 0 12px 30px -10px rgba(37, 99, 235, 0.35);
+}
+
+/* ============================================
+   COMPOSANTS PERSONNALISÉS
+   ============================================ */
+
+@layer components {
+    /* Gradients */
+    .grad-blue {
+        background-image: linear-gradient(135deg, var(--color-brand-800) 0%, var(--color-brand-600) 60%, var(--color-brand-400) 100%);
+    }
+    
+    .grad-card {
+        background-image: linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-900) 100%);
+    }
+    
+    /* Glassmorphism */
+    .glass {
+        backdrop-filter: blur(12px);
+        background-color: rgba(255, 255, 255, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* Cards hover */
+    .card-hover {
+        transition: all 0.25s ease;
+    }
+    .card-hover:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card);
+    }
+    
+    /* Sidebar links */
+    .sidebar-link {
+        transition: all 0.2s ease;
+        position: relative;
+    }
+    .sidebar-link.active {
+        background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+        color: #fff;
+    }
+    .sidebar-link.active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 3px;
+        background: #fff;
+        border-radius: 0 4px 4px 0;
+    }
+    .sidebar-link:hover {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+    }
+    
+    /* Scrollbar */
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    /* Toast */
+    .toast {
+        animation: slideDown 0.3s ease-out;
+    }
+    
+    /* Student card */
+    .student-card {
+        background: linear-gradient(135deg, #1e3a8a, #2563eb 50%, #60a5fa);
+    }
+}
+
+/* ============================================
+   UTILITAIRES
+   ============================================ */
+
+@layer utilities {
+    .scrollbar-thin {
+        scrollbar-width: thin;
+    }
+}
+
+/* ============================================
+   IMPRESSION
+   ============================================ */
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
 }

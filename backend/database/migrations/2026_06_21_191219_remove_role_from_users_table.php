@@ -9,12 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn('role');
+ public function up(): void
+{
+    Schema::table('users', function (Blueprint $table) {
+        // On vérifie si la colonne existe avant de la supprimer
+        if (Schema::hasColumn('users', 'role')) {
+            $table->dropColumn('role');
+        }
     });
-    }
+}
 
     /**
      * Reverse the migrations.

@@ -1,4 +1,0 @@
-# Module: Gestion des etudiants
-# Controllers a creer:
-#  - EtudiantController (liste, recherche par nom/annee, infos, ajout)
-#  - InscriptionController

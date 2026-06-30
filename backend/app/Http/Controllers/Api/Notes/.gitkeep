@@ -1,5 +1,0 @@
-# Module: Gestion des notes
-# Controllers a creer:
-#  - NoteController (attribution note CC + SN par matiere/session)
-#  - PvController (PV semestre)
-#  - ListeMatiereController (liste etudiants par matiere)
