@@ -38,3 +38,6 @@ yarn-error.log*
 .pnp/
 .pnp.js
 coverage/
+gestion-academique/storage/framework/views/*.php 
+gestion-academique/storage/framework/cache/* 
+gestion-academique/storage/framework/sessions/* 
