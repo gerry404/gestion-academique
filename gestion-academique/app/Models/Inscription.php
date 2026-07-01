@@ -1,7 +1,7 @@
 <?php
 // app/Models/Inscription.php
 
-namespace App\Models\Etudiants;
+namespace App\Models;
 
 use App\Models\Etablissement\AnneeAcademique;
 use App\Models\Etablissement\Departement;

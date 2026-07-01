@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', function() {
     departementSelect.addEventListener('change', function() {
         const departementId = this.value;
         
-        // Réinitialiser tous les selects
         resetAllSelects();
         
         if (departementId) {
@@ -195,12 +194,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     niveauSelect.innerHTML = '<option value="">Sélectionner un niveau</option>';
-                    data.forEach(niveau => {
+                    if (data.length === 0) {
                         const option = document.createElement('option');
-                        option.value = niveau.id;
-                        option.textContent = niveau.display_name;
+                        option.value = '';
+                        option.textContent = 'Aucun niveau disponible';
+                        option.disabled = true;
                         niveauSelect.appendChild(option);
-                    });
+                    } else {
+                        data.forEach(niveau => {
+                            const option = document.createElement('option');
+                            option.value = niveau.id;
+                            option.textContent = niveau.display_name;
+                            niveauSelect.appendChild(option);
+                        });
+                    }
                 })
                 .catch(() => {
                     niveauSelect.innerHTML = '<option value="">Erreur de chargement</option>';
@@ -232,12 +239,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     semestreSelect.innerHTML = '<option value="">Sélectionner un semestre</option>';
-                    data.forEach(semestre => {
+                    if (data.length === 0) {
                         const option = document.createElement('option');
-                        option.value = semestre.id;
-                        option.textContent = semestre.libelle;
+                        option.value = '';
+                        option.textContent = 'Aucun semestre disponible pour ce niveau';
+                        option.disabled = true;
                         semestreSelect.appendChild(option);
-                    });
+                    } else {
+                        data.forEach(semestre => {
+                            const option = document.createElement('option');
+                            option.value = semestre.id;
+                            option.textContent = semestre.libelle;
+                            semestreSelect.appendChild(option);
+                        });
+                    }
                 })
                 .catch(() => {
                     semestreSelect.innerHTML = '<option value="">Erreur de chargement</option>';
@@ -252,12 +267,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     ueSelect.innerHTML = '<option value="">Sélectionner une UE</option>';
-                    data.forEach(ue => {
+                    if (data.length === 0) {
                         const option = document.createElement('option');
-                        option.value = ue.id;
-                        option.textContent = `${ue.libelle} (${ue.total_credit} crédits)`;
+                        option.value = '';
+                        option.textContent = 'Aucune UE disponible pour ce niveau';
+                        option.disabled = true;
                         ueSelect.appendChild(option);
-                    });
+                    } else {
+                        data.forEach(ue => {
+                            const option = document.createElement('option');
+                            option.value = ue.id;
+                            option.textContent = `${ue.libelle} (${ue.total_credit} crédits)`;
+                            ueSelect.appendChild(option);
+                        });
+                    }
                 })
                 .catch(() => {
                     ueSelect.innerHTML = '<option value="">Erreur de chargement</option>';

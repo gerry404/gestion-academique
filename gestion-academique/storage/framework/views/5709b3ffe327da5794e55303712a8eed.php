@@ -1,16 +1,16 @@
-{{-- resources/views/layouts/app.blade.php --}}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <title>@yield('title', 'EduManager — Gestion Académique')</title>
+    <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
+    <title><?php echo $__env->yieldContent('title', 'EduManager — Gestion Académique'); ?></title>
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -75,30 +75,32 @@
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased">
 
-    @auth
+    <?php if(auth()->guard()->check()): ?>
         <div class="min-h-screen flex">
-            @include('components.sidebar')
+            <?php echo $__env->make('components.sidebar', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             <main class="flex-1 flex flex-col min-w-0">
-                @include('components.header')
+                <?php echo $__env->make('components.header', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
                 <div class="flex-1 p-4 sm:p-6 overflow-y-auto animate-fade-in">
-                    @if(session('success'))
+                    <?php if(session('success')): ?>
                         <div class="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-700">
-                            <i class="fa-solid fa-circle-check mr-2"></i> {{ session('success') }}
+                            <i class="fa-solid fa-circle-check mr-2"></i> <?php echo e(session('success')); ?>
+
                         </div>
-                    @endif
-                    @if(session('error'))
+                    <?php endif; ?>
+                    <?php if(session('error')): ?>
                         <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">
-                            <i class="fa-solid fa-circle-exclamation mr-2"></i> {{ session('error') }}
+                            <i class="fa-solid fa-circle-exclamation mr-2"></i> <?php echo e(session('error')); ?>
+
                         </div>
-                    @endif
-                    @yield('content')
+                    <?php endif; ?>
+                    <?php echo $__env->yieldContent('content'); ?>
                 </div>
-                @include('components.footer')
+                <?php echo $__env->make('components.footer', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </main>
         </div>
-    @else
-        @yield('content')
-    @endauth
+    <?php else: ?>
+        <?php echo $__env->yieldContent('content'); ?>
+    <?php endif; ?>
 
     <script>
         function toggleSidebar() {
@@ -106,8 +108,8 @@
             document.getElementById('sidebarBackdrop').classList.toggle('hidden');
         }
     </script>
-    {{-- resources/views/layouts/app.blade.php --}}
-{{-- Ajouter ceci avant la fermeture du body --}}
+    
+
 
 <!-- Toast container -->
 <div id="toasts" class="fixed top-20 right-4 z-[100] space-y-2 w-80 max-w-[90vw]"></div>
@@ -147,6 +149,6 @@ function toast(message, type = 'info') {
 }
 </script>
 
-@stack('scripts')
+<?php echo $__env->yieldPushContent('scripts'); ?>
 </body>
-</html>
+</html><?php /**PATH D:\projet_atelier_tp\gestion-academique\gestion-academique\resources\views/layouts/app.blade.php ENDPATH**/ ?>

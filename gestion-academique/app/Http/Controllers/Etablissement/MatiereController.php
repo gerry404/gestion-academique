@@ -169,14 +169,7 @@ public function getSemestresByNiveau(Request $request)
         ->orderBy('libelle')
         ->get(['id', 'libelle']);
 
-    // Si aucun semestre trouvé, retourner les semestres de l'année du niveau
-    if ($semestres->isEmpty()) {
-        $niveau = Niveau::findOrFail($request->niveau_id);
-        $semestres = Semestre::where('annee_academique_id', $niveau->annee_academique_id)
-            ->orderBy('libelle')
-            ->get(['id', 'libelle']);
-    }
-
+    // Si aucun semestre trouvé via les UE, retourner un tableau vide
     return response()->json($semestres);
 }
 

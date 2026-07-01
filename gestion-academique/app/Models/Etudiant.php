@@ -1,7 +1,7 @@
 <?php
 // app/Models/Etudiant.php
 
-namespace App\Models\Etudiants;
+namespace App\Models;
 
 use App\Models\Etablissement\Departement;
 use App\Models\Etablissement\Niveau;
@@ -19,11 +19,11 @@ class Etudiant extends Model
         'date_naissance',
         'lieu_naissance',
         'nationalite',
+        'pays',
         'telephone',
         'email',
         'adresse',
         'photo',
-        'pays',
         'est_actif',
     ];
 

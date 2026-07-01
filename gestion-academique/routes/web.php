@@ -10,10 +10,15 @@ use App\Http\Controllers\Etablissement\DepartementController;
 use App\Http\Controllers\Etablissement\SpecialiteController;
 use App\Http\Controllers\Etablissement\NiveauController;
 use App\Http\Controllers\Etablissement\SemestreController;
-use App\Http\Controllers\Etablissement\DiplomeController;
 use App\Http\Controllers\Etablissement\PersonnelController;
 use App\Http\Controllers\Etablissement\UEController;
+use App\Http\Controllers\Notes\NoteController;
 use App\Http\Controllers\Etablissement\MatiereController;
+use App\Http\Controllers\EtudiantController;
+use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\EffetsAcademiques\CarteEtudiantController;
+
+
 
 // ============================================
 // ROUTES PUBLIQUES
@@ -66,8 +71,8 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('semestres/{semestre}/toggle-status', [SemestreController::class, 'toggleStatus'])->name('semestres.toggle-status');
 
         // ----- Diplômes -----
-        Route::resource('diplomes', DiplomeController::class);
-        Route::patch('diplomes/{diplome}/toggle-status', [DiplomeController::class, 'toggleStatus'])->name('diplomes.toggle-status');
+        //Route::resource('diplomes', DiplomeController::class);
+        //Route::patch('diplomes/{diplome}/toggle-status', [DiplomeController::class, 'toggleStatus'])->name('diplomes.toggle-status');
 
         // ----- Personnel -----
         Route::resource('personnels', PersonnelController::class);
@@ -97,12 +102,49 @@ Route::middleware(['auth'])->group(function () {
             return view('administration.settings');
         })->name('settings.index');
     });
+     // Route::resource('diplomes', DiplomeController::class);
+     // Route::patch('diplomes/{diplome}/toggle-status', [DiplomeController::class, 'toggleStatus'])->name('diplomes.toggle-status');  
+    // ============================================
+    // ROUTES ÉTUDIANTS
+    // ============================================
+    Route::resource('etudiants', EtudiantController::class);
+    Route::patch('etudiants/{etudiant}/toggle-status', [EtudiantController::class, 'toggleStatus'])->name('etudiants.toggle-status');
 
+    // ============================================
+    // ROUTES INSCRIPTIONS
+    // ============================================
+    Route::resource('inscriptions', InscriptionController::class);
+    Route::patch('inscriptions/{inscription}/valider', [InscriptionController::class, 'valider'])->name('inscriptions.valider');
+    Route::patch('inscriptions/{inscription}/annuler', [InscriptionController::class, 'annuler'])->name('inscriptions.annuler');
+    Route::get('get-specialites-by-departement', [InscriptionController::class, 'getSpecialitesByDepartement'])
+    ->name('get.specialites.by.departement');
+    Route::get('get-niveaux-by-specialite', [InscriptionController::class, 'getNiveauxBySpecialite'])
+    ->name('get.niveaux.by.specialite');
+
+
+
+    // Notes - Routes AJAX pour la cascade
+    Route::get('get-specialites-by-annee', [NoteController::class, 'getSpecialitesByAnnee'])->name('get.specialites.by.annee');
+    Route::get('get-niveaux-by-specialite', [NoteController::class, 'getNiveauxBySpecialite'])->name('get.niveaux.by.specialite');
+    Route::get('get-semestres-by-niveau', [NoteController::class, 'getSemestresByNiveau'])->name('get.semestres.by.niveau');
+    Route::get('get-matieres-by-semestre', [NoteController::class, 'getMatieresBySemestre'])->name('get.matieres.by.semestre');
+    Route::get('get-etudiants-by-matiere', [NoteController::class, 'getEtudiantsByMatiere'])->name('get.etudiants.by.matiere');
+    Route::get('get-inscription', [NoteController::class, 'getInscription'])->name('get.inscription');
+
+    // Notes CRUD
+    Route::resource('notes', NoteController::class);
+    // Effets académiques - Cartes
+    Route::get('/cartes-etudiant', [CarteEtudiantController::class, 'index'])->name('cartes.index');
+    Route::get('/cartes-etudiant/{id}', [CarteEtudiantController::class, 'show'])->name('cartes.show');
+    Route::get('/cartes-etudiant/{id}/download', [CarteEtudiantController::class, 'download'])->name('cartes.download');
+
+
+    
     // ============================================
     // ROUTES EMPLOYÉ
     // ============================================
 
-    Route::middleware(['role:employe'])->group(function () {
+   /* Route::middleware(['role:employe'])->group(function () {
         Route::get('/etudiants', function () {
             return view('etudiants.index');
         })->name('etudiants.index');
@@ -138,5 +180,5 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/notes', function () {
             return redirect()->back()->with('success', 'Notes saisies avec succès.');
         })->name('notes.store');
-    });
+    });*/
 });

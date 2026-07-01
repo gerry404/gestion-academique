@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('inscriptions', function (Blueprint $table) {
@@ -19,14 +16,12 @@ return new class extends Migration
             $table->foreignId('specialite_id')->constrained('specialites')->onDelete('cascade');
             $table->foreignId('niveau_id')->constrained('niveaux')->onDelete('cascade');
             $table->date('date_inscription')->nullable();
+            $table->enum('statut', ['en_attente', 'validee', 'annulee'])->default('en_attente');
             $table->text('commentaire')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('inscriptions');

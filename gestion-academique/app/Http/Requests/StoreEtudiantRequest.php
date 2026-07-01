@@ -24,7 +24,7 @@ class StoreEtudiantRequest extends FormRequest
             'telephone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:150', 'unique:etudiants,email'],
             'adresse' => ['nullable', 'string'],
-           'pays' => ['riquired', 'string'],
+            'pays' => ['nullable', 'string', 'max:100'], // ✅ Ajouter
 
         ];
     }

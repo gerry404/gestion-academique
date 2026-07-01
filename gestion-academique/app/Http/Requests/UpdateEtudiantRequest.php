@@ -24,6 +24,7 @@ class UpdateEtudiantRequest extends FormRequest
             'date_naissance' => ['nullable', 'date', 'before:today'],
             'lieu_naissance' => ['nullable', 'string', 'max:100'],
             'nationalite' => ['nullable', 'string', 'max:100'],
+            'pays' => ['nullable', 'string', 'max:100'], // ✅ Ajouter
             'telephone' => ['nullable', 'string', 'max:20'],
             'email' => ['nullable', 'email', 'max:150', Rule::unique('etudiants')->ignore($id)],
             'adresse' => ['nullable', 'string'],

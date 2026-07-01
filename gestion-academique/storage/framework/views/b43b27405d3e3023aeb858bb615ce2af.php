@@ -1,6 +1,6 @@
 
-{{-- resources/views/components/sidebar.blade.php --}}
-@php
+
+<?php
     $menus = [
         ['id' => 'dashboard', 'icon' => 'fa-gauge-high', 'label' => 'Tableau de bord', 'route' => 'dashboard'],
         ['group' => 'Établissement', 'items' => [
@@ -31,7 +31,7 @@
         ]],
     ];
     $currentRoute = request()->route()->getName() ?? 'dashboard';
-@endphp
+?>
 
 <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-72 grad-card text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col shadow-2xl">
     <!-- Logo -->
@@ -52,47 +52,48 @@
 
     <!-- Navigation -->
     <nav class="flex-1 overflow-y-auto scrollbar-thin p-3 space-y-1 text-sm">
-        @foreach($menus as $menu)
-            @if(isset($menu['group']))
+        <?php $__currentLoopData = $menus; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $menu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php if(isset($menu['group'])): ?>
                 <details class="mb-1" open>
                     <summary class="px-3 py-2 text-[11px] uppercase tracking-wider text-white/80 font-semibold flex items-center justify-between cursor-pointer hover:text-white transition">
-                        <span>{{ $menu['group'] }}</span>
+                        <span><?php echo e($menu['group']); ?></span>
                         <i class="fa-solid fa-chevron-right chev text-[10px] transition-transform"></i>
                     </summary>
                     <div class="space-y-0.5 mt-1">
-                        @foreach($menu['items'] as $item)
-                            <a href="{{ route($item['route']) }}"
+                        <?php $__currentLoopData = $menu['items']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <a href="<?php echo e(route($item['route'])); ?>"
                                class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition
-                                      {{ $currentRoute === $item['route'] ? 'active' : '' }}">
-                                <i class="fa-solid {{ $item['icon'] }} w-5 text-center"></i>
-                                <span class="text-sm">{{ $item['label'] }}</span>
+                                      <?php echo e($currentRoute === $item['route'] ? 'active' : ''); ?>">
+                                <i class="fa-solid <?php echo e($item['icon']); ?> w-5 text-center"></i>
+                                <span class="text-sm"><?php echo e($item['label']); ?></span>
                             </a>
-                        @endforeach
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </details>
-            @else
-                <a href="{{ route($menu['route']) }}"
+            <?php else: ?>
+                <a href="<?php echo e(route($menu['route'])); ?>"
                    class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-white/80 hover:bg-white/10 hover:text-white transition
-                          {{ $currentRoute === $menu['route'] ? 'active' : '' }}">
-                    <i class="fa-solid {{ $menu['icon'] }} w-5 text-center"></i>
-                    <span class="text-sm">{{ $menu['label'] }}</span>
+                          <?php echo e($currentRoute === $menu['route'] ? 'active' : ''); ?>">
+                    <i class="fa-solid <?php echo e($menu['icon']); ?> w-5 text-center"></i>
+                    <span class="text-sm"><?php echo e($menu['label']); ?></span>
                 </a>
-            @endif
-        @endforeach
+            <?php endif; ?>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </nav>
 
     <!-- User Info -->
     <div class="p-4 border-t border-white/10">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white font-semibold">
-                {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                <?php echo e(strtoupper(substr(auth()->user()->name ?? 'A', 0, 1))); ?>
+
             </div>
             <div class="min-w-0 flex-1">
-                <div class="text-white text-sm font-semibold truncate">{{ auth()->user()->name ?? 'Admin' }}</div>
+                <div class="text-white text-sm font-semibold truncate"><?php echo e(auth()->user()->name ?? 'Admin'); ?></div>
                 <div class="text-[11px] text-brand-200 truncate">Administrateur</div>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
                 <button type="submit" class="text-white/70 hover:text-white transition">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
@@ -103,3 +104,4 @@
 
 <!-- Backdrop for mobile -->
 <div id="sidebarBackdrop" onclick="toggleSidebar()" class="hidden fixed inset-0 bg-black/40 z-30 lg:hidden"></div>
+<?php /**PATH D:\projet_atelier_tp\gestion-academique\gestion-academique\resources\views/components/sidebar.blade.php ENDPATH**/ ?>
